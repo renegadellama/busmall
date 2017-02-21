@@ -1,6 +1,5 @@
 'use strict';
 
-
 //-----------------------constructor----------------------
 
 function PictureSelect(imgName, imgNumber, imgSource) {
@@ -12,8 +11,8 @@ function PictureSelect(imgName, imgNumber, imgSource) {
 PictureSelect.prototype.selectImage = function(){
   for (var i = 0; i < picturesAll.length; i++) {
     picturesAll[i];
-    return picturesAll[i];
     console.log(picturesAll[i]);
+    return picturesAll[i];
   }
 };
 
@@ -38,11 +37,76 @@ var unicorn = new PictureSelect('unicorn', 17, 'img/unicorn.jpg');
 var usb = new PictureSelect('usb', 18, 'img/usb.gif');
 var watercan = new PictureSelect('watercan', 19, 'img/water-can.jpg');
 var wineglass = new PictureSelect('wineglass', 20, 'img/wine-glass.jpg');
+var randomPics = [];
 
+var picturesAll = [bag, banana, bathroom, boots, breakfast, bubblegum, chair, cthulhu, dogduck, dragon, pen, petsweep, scissors, shark, sweep, tauntaun, unicorn, usb, watercan, wineglass];
 
-// var banana = new PictureSelect(src = 'img/banana.jpg');
+var chooseRandomPic = function() {
+  var randomPic = picturesAll[Math.floor(Math.random() * picturesAll.length)];
+  // console.log(randomPic);
+  return randomPic;
+};
 
-var picturesAll = [bag];
-console.log(picturesAll);
+// chooseRandomPic();
+
+var threeRandomPics = function(){
+  for (var i = 0; i < 3; i++) {
+    console.log(i);
+    var randomPicture = chooseRandomPic();
+    if(i === 0) {
+      randomPics.push(randomPicture);
+      console.log(randomPics);
+    }else if(i !== 0) {
+      if(randomPics.includes(randomPicture)){
+        i--;
+        console.log(randomPics);
+      }else{
+        randomPics.push(randomPicture);
+        console.log(randomPics);
+      }
+    }
+  }
+};
+
+threeRandomPics();
 
 // selectImage();
+//--------------------------------table----------------------------------
+// var tableEl = document.createElement('table');
+//
+// var sectionEl = document.getElementById('pictures-table');
+//
+// // sectionEl.appendChild(tableEl);
+//
+// var runPictures = function(){
+//   var tableTimes = document.createElement('tr');
+//     var fieldEl = document.createElement('td');
+//     fieldEl = randomPics[0];
+//     tableTimes.appendChild(fieldEl);
+//
+//   console.log(randomPics[i]);
+// };
+//
+// runPictures();
+
+// var displayPictures = function(){
+//   var firstRow = document.getElementById('pictures-table').rows[0];
+//   var x = firstRow.insertCell(-1);
+//   x.innerHTML = 'New Cell';
+//   var img = document.createElement(randomPics);
+//   x.appendChild(randomPics);
+// };
+//
+
+// displayPictures();
+
+var runThreePics = function(){
+  document.getElementById('image1').src = randomPics[0].src;
+  document.getElementById('image2').src = randomPics[1].src;
+  document.getElementById('image3').src = randomPics[2].src;
+  console.log(randomPics[0]);
+  console.log(randomPics[1]);
+  console.log(randomPics[2]);
+};
+
+runThreePics();
