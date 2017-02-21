@@ -6,6 +6,9 @@ function PictureSelect(imgName, imgNumber, imgSource) {
   this.imgName = imgName;
   this.imgNumber = imgNumber;
   this.imgSource = imgSource;
+  this.views = 0;
+  this.clicks = 0;
+  this.path = 'img/' + imgName + '.jpg';
 }
 
 PictureSelect.prototype.selectImage = function(){
@@ -38,6 +41,9 @@ var usb = new PictureSelect('usb', 18, 'img/usb.gif');
 var watercan = new PictureSelect('watercan', 19, 'img/water-can.jpg');
 var wineglass = new PictureSelect('wineglass', 20, 'img/wine-glass.jpg');
 var randomPics = [];
+var clickTally = [];
+var totalClicks = 0;
+var clickLimit = 25;
 
 var picturesAll = [bag, banana, bathroom, boots, breakfast, bubblegum, chair, cthulhu, dogduck, dragon, pen, petsweep, scissors, shark, sweep, tauntaun, unicorn, usb, watercan, wineglass];
 
@@ -47,7 +53,7 @@ var chooseRandomPic = function() {
   return randomPic;
 };
 
-// chooseRandomPic();
+chooseRandomPic();
 
 var threeRandomPics = function(){
   for (var i = 0; i < 3; i++) {
@@ -70,8 +76,6 @@ var threeRandomPics = function(){
 
 threeRandomPics();
 
-// selectImage();
-
 PictureSelect.prototype.createImage = function() {
   var imageEl = document.createElement('img');
   imageEl.setAttribute('src', this.imgSource);
@@ -82,35 +86,73 @@ PictureSelect.prototype.createImage = function() {
 
 //-------------------------------table----------------------------------
 
-var choiceA = document.getElementById('choiceA');
-var choiceB = document.getElementById('choiceB');
-var choiceC = document.getElementById('choiceC');
+var tableEl = document.createElement('table');
 
-choiceA.appendChild(randomPics[0].createImage());
-choiceB.appendChild(randomPics[1].createImage());
-choiceC.appendChild(randomPics[2].createImage());
+var sectionEl = document.getElementById('pic-table');
+sectionEl.appendChild(tableEl);
 
-var clickCount = function(){
-  console.log('Click works');
-};
-var aChoice = function(){
-  var elSelect = document.getElementById('choiceA');
-  elSelect.addEventListener('click', clickCount, false);
-};
-
-var bChoice = function(){
-  var elSelect = document.getElementById('choiceB');
-  elSelect.addEventListener('click', clickCount, false);
+var runPics = function(){
+  var pics = document.createElement('tr');
+  tableEl.appendChild(pics);
+  for( var i = 0; i < randomPics.length; i++){
+    var fieldEl = document.createElement('td');
+    fieldEl.appendChild(randomPics[i].createImage());
+    pics.appendChild(fieldEl);
+  }
+  console.log(fieldEl);
 };
 
-var cChoice = function(){
-  var elSelect = document.getElementById('choiceC');
-  elSelect.addEventListener('click', clickCount, false);
-};
+runPics();
+// var choiceA = document.getElementById('choiceA');
+// var choiceB = document.getElementById('choiceB');
+// var choiceC = document.getElementById('choiceC');
+//
+// choiceA.appendChild(randomPics[0].createImage());
+// choiceB.appendChild(randomPics[1].createImage());
+// choiceC.appendChild(randomPics[2].createImage());
+//
+// var aChoice = function(){
+//   var elSelect = document.getElementById('choiceA');
+//   elSelect.addEventListener('click', clickCount, false);
+// };
+//
+// var bChoice = function(){
+//   var elSelect = document.getElementById('choiceB');
+//   elSelect.addEventListener('click', clickCount, false);
+// };
+//
+// var cChoice = function(){
+//   var elSelect = document.getElementById('choiceC');
+//   elSelect.addEventListener('click', clickCount, false);
+// };
 
-aChoice();
-bChoice();
-cChoice();
+// var clickCount = function(event){
+//   console.log('Click Works', event);
+//   // if(clickCount() === choiceA){
+//   //   choiceA.push(clickTally);
+//   //   console.log(clickTally);
+//   //   return clickTally;
+//   // }else if(clickCount() === choiceB){
+//   //   choiceB.push(clickTally);
+//   //   console.log(clickTally);
+//   //   return clickTally;
+//   // }else{
+//   //   choiceC.push(clickTally);
+//   //   console.log(clickTally);
+//   //   return clickTally;
+//   // }
+// };
+
+// aChoice();
+// bChoice();
+// cChoice();
+
+
+// var clickCount = function(){
+//   console.log('Click works');
+// };
+
+// runChoices();
 // var runPictures = function(){
 //   var tableTimes = document.createElement('tr');
 //     var fieldEl = document.createElement('td');
