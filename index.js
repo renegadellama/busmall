@@ -77,14 +77,40 @@ PictureSelect.prototype.createImage = function() {
   imageEl.setAttribute('src', this.imgSource);
   return imageEl;
 };
-//--------------------------------table----------------------------------
 
-var sectionEl = document.getElementById('pic-table');
+//-------------------------------clickcounter----------------------------
 
-sectionEl.appendChild(randomPics[0].createImage());
-sectionEl.appendChild(randomPics[1].createImage());
-sectionEl.appendChild(randomPics[2].createImage());
-//
+//-------------------------------table----------------------------------
+
+var choiceA = document.getElementById('choiceA');
+var choiceB = document.getElementById('choiceB');
+var choiceC = document.getElementById('choiceC');
+
+choiceA.appendChild(randomPics[0].createImage());
+choiceB.appendChild(randomPics[1].createImage());
+choiceC.appendChild(randomPics[2].createImage());
+
+var clickCount = function(){
+  console.log('Click works');
+};
+var aChoice = function(){
+  var elSelect = document.getElementById('choiceA');
+  elSelect.addEventListener('click', clickCount, false);
+};
+
+var bChoice = function(){
+  var elSelect = document.getElementById('choiceB');
+  elSelect.addEventListener('click', clickCount, false);
+};
+
+var cChoice = function(){
+  var elSelect = document.getElementById('choiceC');
+  elSelect.addEventListener('click', clickCount, false);
+};
+
+aChoice();
+bChoice();
+cChoice();
 // var runPictures = function(){
 //   var tableTimes = document.createElement('tr');
 //     var fieldEl = document.createElement('td');
