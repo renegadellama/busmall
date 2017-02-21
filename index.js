@@ -71,12 +71,19 @@ var threeRandomPics = function(){
 threeRandomPics();
 
 // selectImage();
+
+PictureSelect.prototype.createImage = function() {
+  var imageEl = document.createElement('img');
+  imageEl.setAttribute('src', this.imgSource);
+  return imageEl;
+};
 //--------------------------------table----------------------------------
-// var tableEl = document.createElement('table');
-//
-// var sectionEl = document.getElementById('pictures-table');
-//
-// // sectionEl.appendChild(tableEl);
+
+var sectionEl = document.getElementById('pic-table');
+
+sectionEl.appendChild(randomPics[0].createImage());
+sectionEl.appendChild(randomPics[1].createImage());
+sectionEl.appendChild(randomPics[2].createImage());
 //
 // var runPictures = function(){
 //   var tableTimes = document.createElement('tr');
@@ -100,13 +107,13 @@ threeRandomPics();
 
 // displayPictures();
 
-var runThreePics = function(){
-  document.getElementById('image1').src = randomPics[0].src;
-  document.getElementById('image2').src = randomPics[1].src;
-  document.getElementById('image3').src = randomPics[2].src;
-  console.log(randomPics[0]);
-  console.log(randomPics[1]);
-  console.log(randomPics[2]);
-};
-
-runThreePics();
+// var runThreePics = function(){
+//   document.getElementById('image1').src = randomPics[0].src;
+//   document.getElementById('image2').src = randomPics[1].src;
+//   document.getElementById('image3').src = randomPics[2].src;
+//   console.log(randomPics[0]);
+//   console.log(randomPics[1]);
+//   console.log(randomPics[2]);
+// };
+//
+// runThreePics();
