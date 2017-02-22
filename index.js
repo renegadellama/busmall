@@ -19,6 +19,17 @@ PictureSelect.prototype.selectImage = function(){
   }
 };
 
+PictureSelect.prototype.displayPicCount = function() {
+  console.log('CLICKS ' + this.clicks);
+};
+
+PictureSelect.prototype.percentage = function(){
+  var percentageNum = ((this.clicks / this.views) * 100);
+  if(isNaN(percentageNum)){
+    percentageNum = 0;
+    console.log('THIS IS THE ' + percentage);
+  }
+};
 //-----------------------------variables------------------------
 var bag = new PictureSelect('bag', 1, 'img/bag.jpg');
 var banana = new PictureSelect('banana', 2, 'img/banana.jpg' );
@@ -90,14 +101,13 @@ var threeRandomPics = function(){
     //   randomPics.push(randomPicture);
       // console.log(randomPics);
     // }else if(i !== 0) {
-      if(randomPics.includes(randomPicture) || oldRandomPics.includes(randomPicture)){
-        i--;
+    if(randomPics.includes(randomPicture) || oldRandomPics.includes(randomPicture)){
+      i--;
         // console.log(randomPics);
-      }else{
-        randomPics.push(randomPicture);
+    }else{
+      randomPics.push(randomPicture);
         // console.log(randomPics);
-      }
-    // }
+    }
   }
 };
 
@@ -108,6 +118,7 @@ PictureSelect.prototype.createImage = function(i) {
   imageEl.setAttribute('src', this.imgSource);
   imageEl.setAttribute('id', this.imgName);
   imageEl.dataset.index = i;
+  this.views++;
   return imageEl;
 };
 
@@ -125,7 +136,12 @@ function runCreateTable(){
 
 runCreateTable();
 
+function timesViewed(){
+
+}
+
 function incrementScores(index){
+  console.log('%&%*%(%)%%(%*&%&%*)');
   console.log('incrementScores, randomPics: ', randomPics[index]);
   randomPics[index].clicks++;
 }
@@ -136,82 +152,32 @@ function resetBoard(){
   randomPics = [];
 }
 
-function lastClick(){
-  totalClicks = 0;
-    totalClicks.clicks++
-  if (totalClicks > 3){
-    return totalClicks;
+function displayResults(){
+  var ulEl = document.getElementById('results');
+  for (var i = 0; i < picturesAll.length; i++) {
+    var listItem = document.createElement('li');
+    ulEl.appendChild(listItem);
+    listItem.textContent = 'You Clicked ' + picturesAll[i].imgName + ' ' + picturesAll[i].clicks;
   }
-}
+};
 
 function clickCount(event) {
   console.log('event: ', event);
   console.log(event.target.id);
   console.log(fieldEl);
   console.log(randomPics[event.target.dataset.index]);
-
-  incrementScores(event.target.dataset.index);
-  resetBoard();
-  chooseRandomPic();
-  threeRandomPics();
-  runCreateTable();
-  lastClick();
+  totalClicks += 1;
+  if(totalClicks < clickLimit){
+    incrementScores(event.target.dataset.index);
+    resetBoard();
+    chooseRandomPic();
+    threeRandomPics();
+    runCreateTable();
+    console.log('!?!?!?!?!??!?!?!?!??!?!?');
+    console.log('clicks' + PictureSelect.clicks);
+  } else{
+    displayResults();
+  }
 };
 
 rowEl.addEventListener('click', clickCount, false);
-
-// var bChoice = function(){
-//   var elSelect = document.getElementById('td');
-//   elSelect.addEventListener('click', clickCount, false);
-// };
-//
-// var cChoice = function(){
-//   var elSelect = document.getElementById('choiceC');
-//   elSelect.addEventListener('click', clickCount, false);
-// };
-
-
-// };
-// clickCount();
-// aChoice();
-// bChoice();
-// cChoice();
-
-
-// var clickCount = function(){
-//   console.log('Click works');
-// };
-
-// runChoices();
-// var runPictures = function(){
-//   var tableTimes = document.createElement('tr');
-//     var fieldEl = document.createElement('td');
-//     fieldEl = randomPics[0];
-//     tableTimes.appendChild(fieldEl);
-//
-//   console.log(randomPics[i]);
-// };
-//
-// runPictures();
-
-// var displayPictures = function(){
-//   var firstRow = document.getElementById('pictures-table').rows[0];
-//   var x = firstRow.insertCell(-1);
-//   x.innerHTML = 'New Cell';
-//   var img = document.createElement(randomPics);
-//   x.appendChild(randomPics);
-// };
-//
-
-// displayPictures();
-
-// var runThreePics = function(){
-//   document.getElementById('image1').src = randomPics[0].src;
-//   document.getElementById('image2').src = randomPics[1].src;
-//   document.getElementById('image3').src = randomPics[2].src;
-//   console.log(randomPics[0]);
-//   console.log(randomPics[1]);
-//   console.log(randomPics[2]);
-// };
-//
-// runThreePics();
