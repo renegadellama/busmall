@@ -41,11 +41,35 @@ var usb = new PictureSelect('usb', 18, 'img/usb.gif');
 var watercan = new PictureSelect('watercan', 19, 'img/water-can.jpg');
 var wineglass = new PictureSelect('wineglass', 20, 'img/wine-glass.jpg');
 var randomPics = [];
-var clickTally = [];
+var oldRandomPics = [];
 var totalClicks = 0;
 var clickLimit = 25;
-
-var picturesAll = [bag, banana, bathroom, boots, breakfast, bubblegum, chair, cthulhu, dogduck, dragon, pen, petsweep, scissors, shark, sweep, tauntaun, unicorn, usb, watercan, wineglass];
+var tableEl = document.getElementById('pic-table');
+var rowEl = document.createElement('tr');
+tableEl.appendChild(rowEl);
+var fieldEl = document.createElement('td');
+var picturesAll = [
+  bag,
+   banana,
+    bathroom,
+     boots,
+      breakfast,
+       bubblegum,
+        chair,
+         cthulhu,
+          dogduck,
+           dragon,
+            pen,
+             petsweep,
+              scissors,
+               shark,
+                sweep,
+                 tauntaun,
+                  unicorn,
+                   usb,
+                    watercan,
+                     wineglass
+                   ];
 
 var chooseRandomPic = function() {
   var randomPic = picturesAll[Math.floor(Math.random() * picturesAll.length)];
@@ -56,29 +80,34 @@ var chooseRandomPic = function() {
 chooseRandomPic();
 
 var threeRandomPics = function(){
+  console.log('!!!!!!!!!!!!!!!!!!!');
+  console.log('threeRandomPics,   oldRandomPics: ', oldRandomPics);
   for (var i = 0; i < 3; i++) {
-    console.log(i);
+    console.log(randomPics);
     var randomPicture = chooseRandomPic();
-    if(i === 0) {
-      randomPics.push(randomPicture);
-      console.log(randomPics);
-    }else if(i !== 0) {
-      if(randomPics.includes(randomPicture)){
+    console.log('randomPicture: ', randomPicture);
+    // if(i === 0) {
+    //   randomPics.push(randomPicture);
+      // console.log(randomPics);
+    // }else if(i !== 0) {
+      if(randomPics.includes(randomPicture) || oldRandomPics.includes(randomPicture)){
         i--;
-        console.log(randomPics);
+        // console.log(randomPics);
       }else{
         randomPics.push(randomPicture);
-        console.log(randomPics);
+        // console.log(randomPics);
       }
-    }
+    // }
   }
 };
 
 threeRandomPics();
 
-PictureSelect.prototype.createImage = function() {
+PictureSelect.prototype.createImage = function(i) {
   var imageEl = document.createElement('img');
   imageEl.setAttribute('src', this.imgSource);
+  imageEl.setAttribute('id', this.imgName);
+  imageEl.dataset.index = i;
   return imageEl;
 };
 
@@ -86,38 +115,53 @@ PictureSelect.prototype.createImage = function() {
 
 //-------------------------------table----------------------------------
 
-var tableEl = document.createElement('table');
-
-var sectionEl = document.getElementById('pic-table');
-sectionEl.appendChild(tableEl);
-
-var runPics = function(){
-  var pics = document.createElement('tr');
-  tableEl.appendChild(pics);
+function runCreateTable(){
   for( var i = 0; i < randomPics.length; i++){
     var fieldEl = document.createElement('td');
-    fieldEl.appendChild(randomPics[i].createImage());
-    pics.appendChild(fieldEl);
+    fieldEl.appendChild(randomPics[i].createImage(i));
+    rowEl.appendChild(fieldEl);
   }
-  console.log(fieldEl);
 };
 
-runPics();
-// var choiceA = document.getElementById('choiceA');
-// var choiceB = document.getElementById('choiceB');
-// var choiceC = document.getElementById('choiceC');
-//
-// choiceA.appendChild(randomPics[0].createImage());
-// choiceB.appendChild(randomPics[1].createImage());
-// choiceC.appendChild(randomPics[2].createImage());
-//
-// var aChoice = function(){
-//   var elSelect = document.getElementById('choiceA');
-//   elSelect.addEventListener('click', clickCount, false);
-// };
-//
+runCreateTable();
+
+function incrementScores(index){
+  console.log('incrementScores, randomPics: ', randomPics[index]);
+  randomPics[index].clicks++;
+}
+
+function resetBoard(){
+  rowEl.innerHTML = '';
+  oldRandomPics = randomPics;
+  randomPics = [];
+}
+
+function lastClick(){
+  totalClicks = 0;
+    totalClicks.clicks++
+  if (totalClicks > 3){
+    return totalClicks;
+  }
+}
+
+function clickCount(event) {
+  console.log('event: ', event);
+  console.log(event.target.id);
+  console.log(fieldEl);
+  console.log(randomPics[event.target.dataset.index]);
+
+  incrementScores(event.target.dataset.index);
+  resetBoard();
+  chooseRandomPic();
+  threeRandomPics();
+  runCreateTable();
+  lastClick();
+};
+
+rowEl.addEventListener('click', clickCount, false);
+
 // var bChoice = function(){
-//   var elSelect = document.getElementById('choiceB');
+//   var elSelect = document.getElementById('td');
 //   elSelect.addEventListener('click', clickCount, false);
 // };
 //
@@ -126,23 +170,9 @@ runPics();
 //   elSelect.addEventListener('click', clickCount, false);
 // };
 
-// var clickCount = function(event){
-//   console.log('Click Works', event);
-//   // if(clickCount() === choiceA){
-//   //   choiceA.push(clickTally);
-//   //   console.log(clickTally);
-//   //   return clickTally;
-//   // }else if(clickCount() === choiceB){
-//   //   choiceB.push(clickTally);
-//   //   console.log(clickTally);
-//   //   return clickTally;
-//   // }else{
-//   //   choiceC.push(clickTally);
-//   //   console.log(clickTally);
-//   //   return clickTally;
-//   // }
-// };
 
+// };
+// clickCount();
 // aChoice();
 // bChoice();
 // cChoice();
