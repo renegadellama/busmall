@@ -1,4 +1,7 @@
 'use strict';
+
+var ctx = document.getElementById('chart').getContext('2d');
+'use strict';
 //local storage
 // localStorage.clear() clears out local storage
 //use a single js page for every html page.
@@ -39,4 +42,30 @@ function allProductNames(products){
 //use funtions to get data and then populate to chart.
 var clickData = allProductClicks(allProducts);
 var nameData = allProductNames(allProducts);
-//allProducts replaces products, products is just a placeholder. clickData is now the container for the value the function spits out.
+
+// var data = [12, 4, 9, 3, 100, 55, 31];
+var labelColors = ['#bc0000','green','blue','black','cyan','#6d3d05','salmon'];
+
+var chartData = {
+  type: 'bar',
+  data: {
+    labels: nameData,
+    datasets: [{ //this is an array of one object\
+      label: '# of votes / products',
+      data: clickData,
+      backgroundColor: labelColors
+    }],
+  },
+  options: {
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    }
+  }
+};
+// chartData.options.scales.yAxes[0].ticks.beginAtZero = true;
+
+var myChart = new Chart(ctx, chartData);

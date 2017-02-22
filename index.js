@@ -19,17 +19,12 @@ PictureSelect.prototype.selectImage = function(){
   }
 };
 
-PictureSelect.prototype.displayPicCount = function() {
-  console.log('CLICKS ' + this.clicks);
+PictureSelect.prototype.percentage = function() {
+  percentageNum = 0;
+  var percentageNum = ((this.clicks / this.views) * 100);
+  console.log('THIS IS THE ' + percentageNum);
 };
 
-PictureSelect.prototype.percentage = function(){
-  var percentageNum = ((this.clicks / this.views) * 100);
-  if(isNaN(percentageNum)){
-    percentageNum = 0;
-    console.log('THIS IS THE ' + percentage);
-  }
-};
 //-----------------------------variables------------------------
 var bag = new PictureSelect('bag', 1, 'img/bag.jpg');
 var banana = new PictureSelect('banana', 2, 'img/banana.jpg' );
@@ -55,6 +50,7 @@ var randomPics = [];
 var oldRandomPics = [];
 var totalClicks = 0;
 var clickLimit = 25;
+var percentageClicks = [];
 var tableEl = document.getElementById('pic-table');
 var rowEl = document.createElement('tr');
 tableEl.appendChild(rowEl);
@@ -84,29 +80,18 @@ var picturesAll = [
 
 var chooseRandomPic = function() {
   var randomPic = picturesAll[Math.floor(Math.random() * picturesAll.length)];
-  // console.log(randomPic);
   return randomPic;
 };
 
 chooseRandomPic();
 
 var threeRandomPics = function(){
-  console.log('!!!!!!!!!!!!!!!!!!!');
-  console.log('threeRandomPics,   oldRandomPics: ', oldRandomPics);
   for (var i = 0; i < 3; i++) {
-    console.log(randomPics);
     var randomPicture = chooseRandomPic();
-    console.log('randomPicture: ', randomPicture);
-    // if(i === 0) {
-    //   randomPics.push(randomPicture);
-      // console.log(randomPics);
-    // }else if(i !== 0) {
     if(randomPics.includes(randomPicture) || oldRandomPics.includes(randomPicture)){
       i--;
-        // console.log(randomPics);
     }else{
       randomPics.push(randomPicture);
-        // console.log(randomPics);
     }
   }
 };
@@ -141,8 +126,6 @@ function timesViewed(){
 }
 
 function incrementScores(index){
-  console.log('%&%*%(%)%%(%*&%&%*)');
-  console.log('incrementScores, randomPics: ', randomPics[index]);
   randomPics[index].clicks++;
 }
 
@@ -161,11 +144,12 @@ function displayResults(){
   }
 };
 
+// function percentageClicks(){
+//   var percent = ((this.views / this.clicks) * 100);
+//   return percent;
+// }
+
 function clickCount(event) {
-  console.log('event: ', event);
-  console.log(event.target.id);
-  console.log(fieldEl);
-  console.log(randomPics[event.target.dataset.index]);
   totalClicks += 1;
   if(totalClicks < clickLimit){
     incrementScores(event.target.dataset.index);
@@ -173,10 +157,9 @@ function clickCount(event) {
     chooseRandomPic();
     threeRandomPics();
     runCreateTable();
-    console.log('!?!?!?!?!??!?!?!?!??!?!?');
-    console.log('clicks' + PictureSelect.clicks);
   } else{
     displayResults();
+    percentageClicks();
   }
 };
 
