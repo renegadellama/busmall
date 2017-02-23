@@ -8,6 +8,7 @@ function PictureSelect(imgName, imgNumber, imgSource) {
   this.imgSource = imgSource;
   this.views = 0;
   this.clicks = 0;
+  this.percentageClicksToViews = 0;
   this.path = 'img/' + imgName + '.jpg';
 }
 
@@ -20,9 +21,11 @@ PictureSelect.prototype.selectImage = function(){
 };
 
 PictureSelect.prototype.percentage = function() {
-  percentageNum = 0;
   var percentageNum = ((this.clicks / this.views) * 100);
   console.log('THIS IS THE ' + percentageNum);
+  console.log(typeof percentageNum);
+  this.percentageClicksToViews = percentageNum;
+  return percentageNum;
 };
 
 //-----------------------------variables------------------------
@@ -50,33 +53,14 @@ var randomPics = [];
 var oldRandomPics = [];
 var totalClicks = 0;
 var clickLimit = 25;
-var percentageClicks = [];
+var finalClicks = [];
+var finalNames = [];
+
 var tableEl = document.getElementById('pic-table');
 var rowEl = document.createElement('tr');
 tableEl.appendChild(rowEl);
 var fieldEl = document.createElement('td');
-var picturesAll = [
-  bag,
-   banana,
-    bathroom,
-     boots,
-      breakfast,
-       bubblegum,
-        chair,
-         cthulhu,
-          dogduck,
-           dragon,
-            pen,
-             petsweep,
-              scissors,
-               shark,
-                sweep,
-                 tauntaun,
-                  unicorn,
-                   usb,
-                    watercan,
-                     wineglass
-                   ];
+var picturesAll = [bag, banana, bathroom, boots, breakfast, bubblegum, chair, cthulhu, dogduck, dragon, pen, petsweep, scissors, shark, sweep, tauntaun, unicorn, usb, watercan, wineglass];
 
 var chooseRandomPic = function() {
   var randomPic = picturesAll[Math.floor(Math.random() * picturesAll.length)];
@@ -135,19 +119,23 @@ function resetBoard(){
   randomPics = [];
 }
 
+
 function displayResults(){
   var ulEl = document.getElementById('results');
   for (var i = 0; i < picturesAll.length; i++) {
     var listItem = document.createElement('li');
     ulEl.appendChild(listItem);
     listItem.textContent = 'You Clicked ' + picturesAll[i].imgName + ' ' + picturesAll[i].clicks;
+    finalClicks.push(picturesAll[i].clicks);
+    finalNames.push(picturesAll[i].imgName);
   }
 };
 
-// function percentageClicks(){
-//   var percent = ((this.views / this.clicks) * 100);
-//   return percent;
-// }
+function percentageClicks(){
+  for (var i = 0; i < picturesAll.length; i++) {
+    picturesAll[i].percentage();
+  }
+}
 
 function clickCount(event) {
   totalClicks += 1;
@@ -160,7 +148,11 @@ function clickCount(event) {
   } else{
     displayResults();
     percentageClicks();
+    runChart();
+    rowEl.removeEventListener('click', clickCount, false);
   }
 };
 
 rowEl.addEventListener('click', clickCount, false);
+
+//----------------------------------------------CHART------------------------
