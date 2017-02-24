@@ -91,8 +91,6 @@ PictureSelect.prototype.createImage = function(i) {
   return imageEl;
 };
 
-//-------------------------------clickcounter----------------------------
-
 //-------------------------------table----------------------------------
 
 function runCreateTable(){
@@ -118,7 +116,6 @@ function resetBoard(){
   oldRandomPics = randomPics;
   randomPics = [];
 }
-
 
 function displayResults(){
   var ulEl = document.getElementById('results');
@@ -148,47 +145,17 @@ function clickCount(event) {
   } else{
     displayResults();
     percentageClicks();
-    runChart();
-    rowEl.removeEventListener('click', clickCount, false);
     saveStuffToLocalStorage();
-    // allProductClicks();
+    // runChart();
+    rowEl.removeEventListener('click', clickCount, false);
   }
 };
 
 rowEl.addEventListener('click', clickCount, false);
-picContainer.addEventListener('click', handlePicContainer, false);
+// picContainer.addEventListener('click', handlePicContainer, false);
 //-----------------------------------LOCAL STORAGE------------------------
 
 function saveStuffToLocalStorage(){
   localStorage.picturesAll = JSON.stringify(picturesAll);
-  // localStorage.finalClicks = JSON.stringify(finalClicks);
-  console.log('saved to localStorage');
-};
-// saves allProducts to localStorage
-
-
-//USE THE SAVE PRODUCTS TO STORAGE FUNCTION AFTER THE LAST CLICK FUNCTION;
-//vvv USE VARIABLES FOR THE PARSED INFO IN GRAPH vvv
-var allProducts = JSON.parse(localStorage.picturesAll);
-//
-// function allProductClicks(products){
-//   var productClicks = [];
-//   for (var i = 0; i < products.length; i++) {
-//     productClicks.push(products[i].clicks);
-//   }
-//   console.log('all product clicks: ', productClicks);
-//   return productClicks;
-// }
-//
-// function allProductNames(products){
-//   var productNames = [];
-//   for (var i = 0; i < products.length; i++) {
-//     productNames.push(products[i].name);
-//   }
-//   console.log('all product names: ', productClicks);
-//   return productNames;
-// }
-//
-// // use funtions to get data and then populate to chart.
-// var clickData = allProductClicks(allPictures);
-// var nameData = allProductNames(allPictures);
+  console.log('saved to localStorage' , picturesAll);
+}
