@@ -1,0 +1,22 @@
+img{
+  height:270px;
+  width:313px;
+  display: inline-block;
+  margin: 8px;
+  border: solid;
+}
+
+.pic-table {
+  text-align: center;
+  display: inline-block;
+}
+
+#choiceA, #choiceB, #choiceC {
+  text-align: center;
+  height:270px;
+  width:313px;
+  display: inline-block;
+  margin: 8px;
+  border: solid;
+
+}
