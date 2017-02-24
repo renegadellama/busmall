@@ -4,14 +4,19 @@ var numberData = [];
 var objectNames = [];
 
 var allData = [];
-if(typeof(localStorage.picturesAll) !== 'undefined'){
-  allData = JSON.parse(localStorage.picturesAll);
+
+function turnToRealData(){
+  if(typeof(localStorage.lsInfo) !== 'undefined'){
+    allData = JSON.parse(localStorage.lsInfo);
+  };
+
+  for (var i = 0; i < allData.length; i++) {
+    numberData.push(allData[i].clicks);
+    objectNames.push(allData[i].imgName);
+  }
 };
 
-for (var i = 0; i < allData.length; i++) {
-  numberData.push(allData[i].clicks);
-  objectNames.push(allData[i].imgName);
-}
+turnToRealData();
 
 var ctx = document.getElementById('chartthing').getContext('2d');
 

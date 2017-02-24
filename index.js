@@ -28,6 +28,15 @@ PictureSelect.prototype.percentage = function() {
   return percentageNum;
 };
 
+PictureSelect.prototype.createImage = function(i) {
+  var imageEl = document.createElement('img');
+  imageEl.setAttribute('src', this.imgSource);
+  imageEl.setAttribute('id', this.imgName);
+  imageEl.dataset.index = i;
+  this.views++;
+  return imageEl;
+};
+
 //-----------------------------variables------------------------
 var bag = new PictureSelect('bag', 1, 'img/bag.jpg');
 var banana = new PictureSelect('banana', 2, 'img/banana.jpg' );
@@ -67,8 +76,6 @@ var chooseRandomPic = function() {
   return randomPic;
 };
 
-chooseRandomPic();
-
 var threeRandomPics = function(){
   for (var i = 0; i < 3; i++) {
     var randomPicture = chooseRandomPic();
@@ -82,15 +89,6 @@ var threeRandomPics = function(){
 
 threeRandomPics();
 
-PictureSelect.prototype.createImage = function(i) {
-  var imageEl = document.createElement('img');
-  imageEl.setAttribute('src', this.imgSource);
-  imageEl.setAttribute('id', this.imgName);
-  imageEl.dataset.index = i;
-  this.views++;
-  return imageEl;
-};
-
 //-------------------------------table----------------------------------
 
 function runCreateTable(){
@@ -102,10 +100,6 @@ function runCreateTable(){
 };
 
 runCreateTable();
-
-function timesViewed(){
-
-}
 
 function incrementScores(index){
   randomPics[index].clicks++;
@@ -156,6 +150,6 @@ rowEl.addEventListener('click', clickCount, false);
 //-----------------------------------LOCAL STORAGE------------------------
 
 function saveStuffToLocalStorage(){
-  localStorage.picturesAll = JSON.stringify(picturesAll);
+  localStorage.lsInfo =JSON.stringify(picturesAll);
   console.log('saved to localStorage' , picturesAll);
 }
