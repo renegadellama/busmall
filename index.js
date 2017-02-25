@@ -61,7 +61,7 @@ var wineglass = new PictureSelect('wineglass', 20, 'img/wine-glass.jpg');
 var randomPics = [];
 var oldRandomPics = [];
 var totalClicks = 0;
-var clickLimit = 5;
+var clickLimit = 25;
 var finalClicks = [];
 var finalNames = [];
 
@@ -70,6 +70,18 @@ var rowEl = document.createElement('tr');
 tableEl.appendChild(rowEl);
 var fieldEl = document.createElement('td');
 var picturesAll = [bag, banana, bathroom, boots, breakfast, bubblegum, chair, cthulhu, dogduck, dragon, pen, petsweep, scissors, shark, sweep, tauntaun, unicorn, usb, watercan, wineglass];
+
+function getLocalStorageData (){
+  if(localStorage.lsInfo){
+    var localStorageData = JSON.parse(localStorage.lsInfo);
+    for(var x = 0; x < picturesAll.length; x++){
+      picturesAll[x].views = localStorageData[x].views;
+      picturesAll[x].clicks = localStorageData[x].clicks;
+    }
+  }
+}
+
+getLocalStorageData();
 
 var chooseRandomPic = function() {
   var randomPic = picturesAll[Math.floor(Math.random() * picturesAll.length)];
@@ -150,6 +162,6 @@ rowEl.addEventListener('click', clickCount, false);
 //-----------------------------------LOCAL STORAGE------------------------
 
 function saveStuffToLocalStorage(){
-  localStorage.lsInfo =JSON.stringify(picturesAll);
+  localStorage.lsInfo = JSON.stringify(picturesAll);
   console.log('saved to localStorage' , picturesAll);
 }
