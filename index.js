@@ -28,6 +28,15 @@ PictureSelect.prototype.percentage = function() {
   return percentageNum;
 };
 
+PictureSelect.prototype.createImage = function(i) {
+  var imageEl = document.createElement('img');
+  imageEl.setAttribute('src', this.imgSource);
+  imageEl.setAttribute('id', this.imgName);
+  imageEl.dataset.index = i;
+  this.views++;
+  return imageEl;
+};
+
 //-----------------------------variables------------------------
 var bag = new PictureSelect('bag', 1, 'img/bag.jpg');
 var banana = new PictureSelect('banana', 2, 'img/banana.jpg' );
@@ -62,12 +71,22 @@ tableEl.appendChild(rowEl);
 var fieldEl = document.createElement('td');
 var picturesAll = [bag, banana, bathroom, boots, breakfast, bubblegum, chair, cthulhu, dogduck, dragon, pen, petsweep, scissors, shark, sweep, tauntaun, unicorn, usb, watercan, wineglass];
 
+function getLocalStorageData (){
+  if(localStorage.lsInfo){
+    var localStorageData = JSON.parse(localStorage.lsInfo);
+    for(var x = 0; x < picturesAll.length; x++){
+      picturesAll[x].views = localStorageData[x].views;
+      picturesAll[x].clicks = localStorageData[x].clicks;
+    }
+  }
+}
+
+getLocalStorageData();
+
 var chooseRandomPic = function() {
   var randomPic = picturesAll[Math.floor(Math.random() * picturesAll.length)];
   return randomPic;
 };
-
-chooseRandomPic();
 
 var threeRandomPics = function(){
   for (var i = 0; i < 3; i++) {
@@ -82,17 +101,6 @@ var threeRandomPics = function(){
 
 threeRandomPics();
 
-PictureSelect.prototype.createImage = function(i) {
-  var imageEl = document.createElement('img');
-  imageEl.setAttribute('src', this.imgSource);
-  imageEl.setAttribute('id', this.imgName);
-  imageEl.dataset.index = i;
-  this.views++;
-  return imageEl;
-};
-
-//-------------------------------clickcounter----------------------------
-
 //-------------------------------table----------------------------------
 
 function runCreateTable(){
@@ -105,10 +113,6 @@ function runCreateTable(){
 
 runCreateTable();
 
-function timesViewed(){
-
-}
-
 function incrementScores(index){
   randomPics[index].clicks++;
 }
@@ -118,7 +122,6 @@ function resetBoard(){
   oldRandomPics = randomPics;
   randomPics = [];
 }
-
 
 function displayResults(){
   var ulEl = document.getElementById('results');
@@ -148,11 +151,17 @@ function clickCount(event) {
   } else{
     displayResults();
     percentageClicks();
-    runChart();
+    saveStuffToLocalStorage();
+    // runChart();
     rowEl.removeEventListener('click', clickCount, false);
   }
 };
 
 rowEl.addEventListener('click', clickCount, false);
+// picContainer.addEventListener('click', handlePicContainer, false);
+//-----------------------------------LOCAL STORAGE------------------------
 
-//----------------------------------------------CHART------------------------
+function saveStuffToLocalStorage(){
+  localStorage.lsInfo = JSON.stringify(picturesAll);
+  console.log('saved to localStorage' , picturesAll);
+}
