@@ -1,22 +1,71 @@
+body {
+  background: linear-gradient(to right, #484b5e , darkred);
+}
+
+h1{
+  font-family: impact;
+}
+
+h3{
+  font-family: comic;
+  margin-bottom: 5%;
+}
 img{
   height:270px;
   width:313px;
-  display: inline-block;
-  margin: 8px;
+  display: block;
+  margin: 20px;
   border: solid;
+  border-width: thick;
+  border-color: black;
+  text-align: center;
 }
 
-.pic-table {
+#pic-table{
+  margin-left: 10%;
   text-align: center;
-  display: inline-block;
 }
 
-#choiceA, #choiceB, #choiceC {
+#results{
   text-align: center;
-  height:270px;
-  width:313px;
-  display: inline-block;
-  margin: 8px;
   border: solid;
+  border-width: medium;
+  width: 450px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #c40f33;
+}
 
+.title{
+background-color: #c40f33;
+width: 960px;
+text-align: center;
+height: 100px;
+margin-left: auto;
+margin-right: auto;
+padding: 1%;
+border: solid;
+border-width: thick;
+}
+
+.pictures{
+  width: 100%;
+  text-align: center;
+}
+
+.chartresults{
+  text-align: center;
+  background-color: #c40f33;
+  border: solid;
+  border-width: thick;
+  width: 400px;
+  margin-left: 35%;
+}
+
+a:link{
+  color: red;
+}
+
+a:visited{
+  color: pink;
 }

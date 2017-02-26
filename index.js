@@ -128,7 +128,7 @@ function displayResults(){
   for (var i = 0; i < picturesAll.length; i++) {
     var listItem = document.createElement('li');
     ulEl.appendChild(listItem);
-    listItem.textContent = 'You Clicked ' + picturesAll[i].imgName + ' ' + picturesAll[i].clicks;
+    listItem.textContent = 'You Clicked ' + picturesAll[i].imgName + ' ' + picturesAll[i].clicks + ' times.';
     finalClicks.push(picturesAll[i].clicks);
     finalNames.push(picturesAll[i].imgName);
   }
