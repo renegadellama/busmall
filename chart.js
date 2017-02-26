@@ -2,7 +2,6 @@
 
 var numberData = [];
 var objectNames = [];
-
 var allData = [];
 
 function turnToRealData(){
@@ -20,15 +19,14 @@ turnToRealData();
 
 var ctx = document.getElementById('chartthing').getContext('2d');
 
-// function runChart(){
 var chartData = {
   type: 'bar',
   data: {
     labels: objectNames,
     datasets: [{ //this is an array of one object\
-      label: '# of votes / color',
+      label: 'Products Selected',
       data: numberData,
-      backgroundColor: 'grey',
+      backgroundColor: 'black',
     }],
   },
   options: {
@@ -41,6 +39,7 @@ var chartData = {
     }
   }
 };
+
 chartData.options.scales.yAxes[0].ticks.beginAtZero = true;
 
 var chart = new Chart(ctx, chartData);
